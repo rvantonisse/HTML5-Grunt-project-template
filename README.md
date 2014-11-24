@@ -24,9 +24,10 @@ My HTML5 Grunt template to start building new projects fast.
 <!-- Folder structure code block -->
 
 		
-	Folder1
-	Folder2
-		Subfolder
+	Root
+	├Folder1
+	└Folder2
+		└Subfolder
 	
 
 <!-- /Folder structure code block -->
