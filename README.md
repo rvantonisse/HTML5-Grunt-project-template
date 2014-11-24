@@ -43,7 +43,7 @@ First of all: clone this repository to your development environment. Doh!
 
 If you like this project, watch it, stargaze it, fork it, like it more and start making your own branches with it! =D
 
-Make sure you have [installed node and grunt-cli](#Dependencies) before you continue. If all is well, open up your command line interface and set-up your project environment:
+Make sure you have [installed node and grunt-cli](#dependencies) before you continue. If all is well, open up your command line interface and set-up your project environment:
 
 	$ npm install
 
