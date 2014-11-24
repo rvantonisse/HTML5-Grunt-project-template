@@ -73,6 +73,7 @@ You are now ready to make changes to your new project. Well done!
 	* [ ] _components.scss
 	* [ ] _views.scss
 	* [ ] _base.scss
+
 <!-- /List -->
 
 [Table of contents](#table-of-contents)
