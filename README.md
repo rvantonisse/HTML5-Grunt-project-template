@@ -11,16 +11,25 @@ My HTML5 Grunt template to start building new projects fast.
 
 ## Dependencies
 
-- [ ] __Todo__: Add dependencie list
+* [ ] __Todo__: Add dependencie list
+
+<!-- List dependencies here -->
+...
+<!-- /List dependencies here -->
 
 ## Folder architecture
 
 * [ ] __Todo__: Add folder structure as:
-* ...
 
+<!-- Folder structure code block -->
+
+		
 	Folder1
 	Folder2
 		Subfolder
+	
+
+<!-- /Folder structure code block -->
 
 ## TODO
 
@@ -30,3 +39,4 @@ My HTML5 Grunt template to start building new projects fast.
 * [ ] Other stuff
 * [ ] More stuff
 * [ ] And lots more stuff to do... :/
+
