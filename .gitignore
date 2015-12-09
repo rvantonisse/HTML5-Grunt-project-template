@@ -43,8 +43,8 @@ Thumbs.db
 
 # Project folders #
 ###################
-development/
-distribution/
 build/
+dev/
+dist/
 node_modules/
 bower_components/

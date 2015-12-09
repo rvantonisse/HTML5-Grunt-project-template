@@ -1,5 +1,5 @@
 {
-  "name": "HTML5-Grunt-template",
+  "name": "html5-grunt-template",
   "version": "0.1.0",
   "devDependencies": {
     "grunt": "~0.4.5",
@@ -12,5 +12,24 @@
     "grunt-contrib-uglify": "~0.5.0",
     "grunt-contrib-watch": "^0.6.1",
     "load-grunt-tasks": "^1.0.0"
-  }
+  },
+  "description": "My HTML5 Grunt template to start building new projects fast.",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rvantonisse/HTML5-Grunt-project-template.git"
+  },
+  "keywords": [
+    "Grunt",
+    "html5"
+  ],
+  "author": "rv antonisse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rvantonisse/HTML5-Grunt-project-template/issues"
+  },
+  "homepage": "https://github.com/rvantonisse/HTML5-Grunt-project-template#readme"
 }
