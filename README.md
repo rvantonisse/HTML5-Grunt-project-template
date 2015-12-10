@@ -21,15 +21,13 @@ My HTML5 Grunt template to start building new projects fast.
 
 * [Node.js](http://nodejs.org/)
 * [Grunt.js](http://gruntjs.com/getting-started)
-	* "grunt-contrib-clean"
-	* "grunt-contrib-concat"
-	* "grunt-contrib-copy"
-	* "grunt-contrib-cssmin"
-	* "grunt-contrib-jshint"
-	* "grunt-contrib-nodeunit"
-	* "grunt-contrib-uglify"
-	* "grunt-contrib-watch"
-	* "load-grunt-tasks"
+	* "grunt-contrib-clean" // Remove (generated) folders
+	* "grunt-contrib-concat" // Put files together, css & js
+	* "grunt-contrib-copy" // Copy files and paste to destiny
+	* "grunt-contrib-cssmin" // Minify css
+	* "grunt-contrib-uglify" // Minify / uglyfy js
+	* "grunt-contrib-watch" // Watch tasks and do stuff on changed files
+	* "load-grunt-tasks" // Load all `grunt-*` tasks
 
 
 
@@ -85,14 +83,15 @@ Start developing with grunt:
 
 <!-- List -->
 * [ ] Complete this README
-	* [ ] Write a nice clear description
-	* [ ] Add folder structure
+	* [x] Write a nice clear description
+	* [x] Add folder structure
 	* [ ] Add explanation for folder structure
 * [ ] Grunt
 	* [ ] Create an initiate Gruntfile with basic compiling for scripts and css.
 	* [ ] Add templating mechanics to create new components and views as a grunt task.
-	* [ ] Load all grunt tasks from a folder named `grunt-tasks`.
-* [ ] Add [Sass](http://sass-lang.com/) to the project.
+	* [ ] Load all grunt tasks from a folder named `grunt/tasks`.
+	* [ ] Load all grunt task configuration from a folder named `grunt/config`.
+* [ ] Add / convert css to [Sass](http://sass-lang.com/) to the project.
 * [ ] Add a test environment
 
 <!-- /List -->
