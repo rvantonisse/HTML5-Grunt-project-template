@@ -75,7 +75,12 @@ Start developing with grunt:
 
 [Table of contents](#table-of-contents)
 
+### Grunt tasks
 
+These grunt  tasks are currently available:
+* [x] `$ Grunt`: Defaults to `$ Grunt dev`
+* [x] `$ Grunt clean`: Cleans all generated folders; build, dev and dist.
+* [ ] `$ Grunt dev`: Cleans previous dev
 
 
 
