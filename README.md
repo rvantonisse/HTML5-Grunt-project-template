@@ -78,9 +78,12 @@ Start developing with grunt:
 ### Grunt tasks
 
 These grunt  tasks are currently available:
-* [x] `$ Grunt`: Defaults to `$ Grunt dev`
-* [x] `$ Grunt clean`: Cleans all generated folders; build, dev and dist.
-* [ ] `$ Grunt dev`: Cleans previous dev
+* [x] `$ grunt`: Defaults to `$ Grunt dev`
+* [x] `$ grunt clean`: Cleans all generated folders; build, dev and dist.
+* [ ] `$ grunt dev`: Cleans previous dev
+* [ ] `$ grunt dist`: Prepares a website for live distribution
+
+
 
 
 
