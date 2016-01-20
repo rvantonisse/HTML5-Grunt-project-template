@@ -57,6 +57,17 @@ var nunjucks = require('nunjucks');
 		// grunt.log.writeln('');
 		return views;
 	}
+	function getViewData (view) {
+		var dataPath = getViewsDir() + view + '/'  + view + '.json';
+		var viewData = {};
+		if (grunt.file.isFile(dataPath)) {
+			viewData = grunt.file.readJSON(dataPath);
+			grunt.log.writeln(view + ' with data: ' + dataPath);
+		} else {
+			grunt.log.writeln(view + ' without data.');
+		}
+		return viewData;
+	}
 	function getSubviewsFor (viewName) {
 		var viewPath = getViewsDir() + viewName;
 		var subviews = fs.readdirSync(viewPath)
@@ -118,6 +129,7 @@ var nunjucks = require('nunjucks');
 	module.exports = {
 		getTemplate: getTemplate,
 		getViews: getViews,
+		getViewData: getViewData,
 		getSubViews: getSubViews,
 		getSubviewData: getSubviewData,
 		getSubviewsFor: getSubviewsFor,

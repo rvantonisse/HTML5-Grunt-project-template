@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="nl-nl">
+<html lang="en-GB">
 <head>
   <meta charset="utf-8">
-  
-  <title>{% block title %}RV Antonisse multimedia design{% endblock %}</title>
-  
+
+  <title>{% block title %}Grunt Website Boilerplate by Roel Antonisse{% endblock %}</title>
+
   <meta name="author" content="{{ viewData.meta.author }}">
   <meta name="description" content="{{ viewData.meta.description }}">
   <meta name="keywords" content="{{ viewData.meta.keywords }}">
@@ -17,26 +17,17 @@
   <link rel="stylesheet" type="text/css" href="{{ cssPath }}">
 </head>
 <body>
-  <div class="wrapper">
-    <!-- HEADER -->
-    {% block siteHeader %}
-    {% include "components/site-header/site-header.html" %}
-    {% endblock %}
-    <!-- /HEADER -->
-
-    <!-- CONTENT -->
-    <section class="content">
-      {% block content %}{% endblock %}
-    </section>
-    <!-- /CONTENT -->
-  </div>
-
-  <!-- FOOTER -->
-  {% block siteFooter %}
-  {% include "components/site-footer/site-footer.html" %}
-  {% endblock %}
-  <!-- /FOOTER -->
+  {% include "../components/site-header/site-header.html" %}
+  <!-- CONTENT -->
+  <section class="content">
+  {% block content %}{% endblock %}
+  </section>
+  <!-- /CONTENT -->
+  {% include "../components/site-footer/site-footer.html" %}
+  <!-- SCRIPTS -->
   <script src="{{ jsPath }}"></script>
+
+  <!-- LIVERELOAD -->
   {% if (mode == 'development') %}
   <script src="//localhost:35729/livereload.js"></script>
   {% endif %}

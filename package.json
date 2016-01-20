@@ -1,5 +1,5 @@
 {
-  "name": "Grunt website boilerplate",
+  "name": "HTML5-Grunt-project-template",
   "version": "1.0.0",
   "description": "Grunt project to generate a static website",
   "main": "index.js",

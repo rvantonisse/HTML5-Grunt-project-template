@@ -45,7 +45,7 @@ module.exports = function (grunt) {
 						and read the "menu-order" property
 					*/
 					var viewDir = grunt.config('viewsSourceDir') + view + '/';
-					var dataFile = 'data.json';
+					var dataFile = view + '.json';
 					var defaultValue = 10;
 					// Check if the data file exists, if not assign defaultValue
 					if (!file.isFile(viewDir + dataFile)) {
@@ -106,6 +106,7 @@ module.exports = function (grunt) {
 				data.mode = mode;
 				data.title = data.name + ' | ' + project.title;
 				data.menu = getMenu();
+				data.viewData = compiler.getViewData(name)['view-data'];
 				data.subviews = [];
 				compiler.getSubviewsFor(name).forEach(function (subview) {
 					var subviewData = compiler.getSubviewData(name, subview);

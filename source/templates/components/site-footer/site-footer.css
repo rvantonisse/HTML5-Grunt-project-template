@@ -1,0 +1,7 @@
+/* .site-footer */
+.site-footer {}
+
+
+@media (min-width: 40em) {
+	.site-footer {}
+}
