@@ -1,35 +1,23 @@
 {
-  "name": "html5-grunt-template",
-  "version": "0.1.0",
-  "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-copy": "^0.7.0",
-    "grunt-contrib-cssmin": "^0.10.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-nodeunit": "~0.4.1",
-    "grunt-contrib-uglify": "~0.5.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "load-grunt-tasks": "^1.0.0"
-  },
-  "description": "My HTML5 Grunt template to start building new projects fast.",
-  "main": "Gruntfile.js",
+  "name": "Grunt website boilerplate",
+  "version": "1.0.0",
+  "description": "Grunt project to generate a static website",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rvantonisse/HTML5-Grunt-project-template.git"
-  },
-  "keywords": [
-    "Grunt",
-    "html5"
-  ],
-  "author": "rv antonisse",
+  "author": "Roel (RV) Antonisse",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rvantonisse/HTML5-Grunt-project-template/issues"
-  },
-  "homepage": "https://github.com/rvantonisse/HTML5-Grunt-project-template#readme"
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-prompt": "^1.3.3",
+    "matchdep": "^1.0.0",
+    "nunjucks": "^2.2.0"
+  }
 }

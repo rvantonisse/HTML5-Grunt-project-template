@@ -1,0 +1,13 @@
+{
+	"view-name": "lege-index",
+	"menu-order": 10,
+	"view-data": {
+		"meta": {
+			"author": "the author",
+			"date": "00-00-0000",
+			"description": "A description for lege-index",
+			"keywords": "lege-index, keyword",
+			"title": "lege-index"
+		}
+	}
+}

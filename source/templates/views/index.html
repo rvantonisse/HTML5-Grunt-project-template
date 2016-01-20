@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="nl-nl">
+<head>
+  <meta charset="utf-8">
+  
+  <title>{% block title %}RV Antonisse multimedia design{% endblock %}</title>
+  
+  <meta name="author" content="{{ viewData.meta.author }}">
+  <meta name="description" content="{{ viewData.meta.description }}">
+  <meta name="keywords" content="{{ viewData.meta.keywords }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="favicon.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" type="text/css" href="{{ cssPath }}">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- HEADER -->
+    {% block siteHeader %}
+    {% include "components/site-header/site-header.html" %}
+    {% endblock %}
+    <!-- /HEADER -->
+
+    <!-- CONTENT -->
+    <section class="content">
+      {% block content %}{% endblock %}
+    </section>
+    <!-- /CONTENT -->
+  </div>
+
+  <!-- FOOTER -->
+  {% block siteFooter %}
+  {% include "components/site-footer/site-footer.html" %}
+  {% endblock %}
+  <!-- /FOOTER -->
+  <script src="{{ jsPath }}"></script>
+  {% if (mode == 'development') %}
+  <script src="//localhost:35729/livereload.js"></script>
+  {% endif %}
+</body>
+</html>

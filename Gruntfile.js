@@ -1,61 +1,37 @@
 module.exports = function(grunt) {
-  // Load grunt-tasks saved in the package.json
-  require('load-grunt-tasks')(grunt);
+  'use strict';
 
-  // Project configuration.
-  var gruntConfig = {
-    pkg: grunt.file.readJSON('package.json'),
+  // Load external configuration files by task name.
+  var configuration = require('./grunt/configuration')(grunt, [
+      'clean',
+      'concat',
+      'copy',
+      'cssmin',
+      // 'imagemin',
+      // 'sass',
+      // 'svgmin',
+      'prompt',
+      'uglify',
+      'watch'
+  ]);
+  configuration.pkg = grunt.file.readJSON('package.json');
+  configuration.templatesSourceDir = 'source/templates/';
+  configuration.componentsSourceDir = '<%= templatesSourceDir %>components/';
+  configuration.viewsSourceDir = '<%= templatesSourceDir %>views/';
+  configuration.cssSourceDir = 'source/assets/css/';
+  configuration.jsSourceDir = 'source/assets/js/';
+  grunt.config.init(configuration);
 
-    // Clean folders, e.g. remove them - DONT TRY TARGET ROOT "./" LOL
-    clean: {
-      build: "build/",
-      dev: "dev/",
-      dist: "dist/"
-    },
-
-    // Copy stuff (and paste) from one place to another
-    copy: {},
-
-    // Put files together in one file
-    concat: {
-      css: {
-        files: [{
-          src: ["source/assets/css/**/*.css"],
-          dest: "build/css/build.css",
-        }]
-      }
-    },
-
-    // Minify target css files into destination css minified file
-    cssmin: {
-      dist: {
-        files: [{
-          src: ["build/css/*.css"],
-          dest: "dist/assets/css",
-          ext: ".min.css"
-        }]
-      }
-    },
-
-    // Minify / uglyfy js files
-    uglify: {},
-
-    // Watch files and do stuff when changed
-    watch: {}
-  };
-  grunt.initConfig(gruntConfig);
+  // Load all npm installed grunt tasks.
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   /*
-  Default task(s)
+  Grunt task(s)
   */
-  // Build; /build
-  grunt.registerTask('build',['concat:css','concat:js']);
-
-  // Develop; /dev
-  grunt.registerTask('develop', ['clean:dev','build','watch']);
-  // Distribute; /dist
-  grunt.registerTask('distribute', ['clean:dist','uglify:dist','cssmin:dist','copy:dist']);
-  // Default task; Develop
+  // Default task
   grunt.registerTask('default', ['develop']);
+
+  // Load all tasks from the 'grunt/tasks'-folder
+  grunt.task.loadTasks('grunt/tasks');
 
 };
