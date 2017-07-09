@@ -18,6 +18,7 @@ module.exports = function(grunt) {
   configuration.templatesSourceDir = 'source/templates/';
   configuration.componentsSourceDir = '<%= templatesSourceDir %>components/';
   configuration.viewsSourceDir = '<%= templatesSourceDir %>views/';
+  configuration.assetsDir = 'source/assets/';
   configuration.cssSourceDir = 'source/assets/css/';
   configuration.jsSourceDir = 'source/assets/js/';
   grunt.config.init(configuration);
