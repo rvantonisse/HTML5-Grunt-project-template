@@ -4,16 +4,17 @@
  */
 function getConfiguration(grunt) {
 	'use strict';
+
 	return {
 		css: {
 			files: [
 				// CSS files
 				{
 					src: [
-						'source/assets/css/vendor/**/*.css',
-						'source/assets/css/base/**/*.css',
-						'source/templates/views/**/*.css',
-						'source/templates/components/**/*.css'
+						'<%= cssSourceDir %>vendor/**/*.css',
+						'<%= cssSourceDir %>base/**/*.css',
+						'<%= componentsSourceDir %>**/*.css',
+						'<%= viewsSourceDir %>**/*.css'
 					],
 					dest: 'development/assets/<%= pkg.name %>.css'
 				}
@@ -24,10 +25,10 @@ function getConfiguration(grunt) {
 				// JS files
 				{
 					src: [
-						'source/assets/js/vendor/**/*.js',
-						'source/assets/js/base/**/*.js',
-						'source/templates/views/**/*.js',
-						'source/templates/components/**/*.js'
+						'<%= jsSourceDir %>vendor/**/*.js',
+						'<%= jsSourceDir %>base/**/*.js',
+						'<%= componentsSourceDir %>**/*.js',
+						'<%= viewsSourceDir %>**/*.js'
 					],
 					dest: 'development/assets/<%= pkg.name %>.js'
 				}
@@ -38,20 +39,20 @@ function getConfiguration(grunt) {
 				// CSS files
 				{
 					src: [
-						'source/assets/css/vendor/**/*.css',
-						'source/assets/css/base/**/*.css',
-						'source/templates/views/**/*.css',
-						'source/templates/components/**/*.css'
+						'<%= cssSourceDir %>vendor/**/*.css',
+						'<%= cssSourceDir %>base/**/*.css',
+						'<%= componentsSourceDir %>**/*.css',
+						'<%= viewsSourceDir %>**/*.css'
 					],
 					dest: 'distribution/assets/<%= pkg.name %>.css'
 				},
 				// JS files
 				{
 					src: [
-						'source/assets/js/vendor/**/*.js',
-						'source/assets/js/base/**/*.js',
-						'source/templates/views/**/*.js',
-						'source/templates/components/**/*.js'
+						'<%= jsSourceDir %>vendor/**/*.js',
+						'<%= jsSourceDir %>base/**/*.js',
+						'<%= componentsSourceDir %>**/*.js',
+						'<%= viewsSourceDir %>**/*.js'
 					],
 					dest: 'distribution/assets/<%= pkg.name %>.js'
 				}
