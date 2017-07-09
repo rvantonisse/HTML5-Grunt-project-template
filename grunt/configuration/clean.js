@@ -4,6 +4,7 @@
  */
 function getConfiguration(grunt) {
 	'use strict';
+
 	return {
 		development: [
 			'development/*'
