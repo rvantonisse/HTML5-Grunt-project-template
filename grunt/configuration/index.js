@@ -1,7 +1,7 @@
 
 /**
  * Load external grunt task configuration files by task name from given list.
- * @author Eric Bednarz
+ * @author Eric Bednarz, Roel Antonisse
  * @param {Object} grunt
  * @param {Array} taskList
  */
@@ -10,13 +10,12 @@ function getConfiguration(grunt, taskList) {
     var configuration = {
         pkg: grunt.file.readJSON('./package.json')
     };
-    var length = taskList.length;
-    var task;
 
-    while (length--) {
-        task = taskList[length];
+    taskList.forEach(
+      function getConfiguration(task) {
         configuration[task] = require('./' + task)(grunt);
-    }
+      }
+    );
 
     return configuration;
 }
