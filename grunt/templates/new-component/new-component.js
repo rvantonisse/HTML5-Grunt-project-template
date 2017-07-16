@@ -1,1 +1,1 @@
-/* _COMPONENT-NAME_.js */
+/* _COMPONENT_NAME_.js */

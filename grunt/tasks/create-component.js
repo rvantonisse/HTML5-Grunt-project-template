@@ -1,89 +1,81 @@
 var helpers = require('../utilities/helpers');
 var fs = require('fs');
 
-module.exports = function (grunt) {
-	'use strict';
-	grunt.registerTask(
-		'create-component',
-		'Create a new component',
-		/**
+module.exports = function(grunt) {
+  'use strict';
+
+  grunt.registerTask('create-component', 'Create a new component',
+  /**
 		 * Create a new component inside source/templates/components/
 		 * new-component/
-		 * - media/
-		 * -- index.html
 		 * - new-component.css
 		 * - new-component.html
 		 * - new-component.js
-		 * - new-component.json
-		 * @param {String} viewName
+		 * @param {String} componentName
 		 */
-		function (componentName) {
-			var file = grunt.file;
+  function(componentName) {
+    var file = grunt.file;
 
-			function getConfigComponentName () {
-				return grunt.config('createComponent.componentName') || null;
-			}
+    function getConfigComponentName() {
+      return grunt.config('createComponent.componentName') || null;
+    }
 
-			function getComponentName () {
-				return componentName || getConfigComponentName();
-			}
+    function getComponentName() {
+      return componentName || getConfigComponentName();
+    }
 
-			function getComponentUrl () {
-				var niceUrl = helpers.replaceSpacesWithDashes;
-				return niceUrl(getComponentName());
-			}
-			function getDestination () {
-				return 'source/templates/components/' + getComponentUrl();
-			}
+    function getComponentUrl() {
+      var niceUrl = helpers.replaceSpacesWithDashes;
+      return niceUrl(getComponentName());
+    }
 
-			// Get new-view template
-			function getTemplate (path) {
-				return file.read(path).replace(/_COMPONENT-NAME_/g, getComponentUrl());
-			}
-			function getTemplateFiles (path) {
-				return fs.readdirSync(path)
-					.filter(function (name) {
-						return file.isFile(path + name);
-					});
-			}
-			function writeFiles () {
-				var newViewTemplatesDir = 'grunt/templates/new-component/';
-				var files = getTemplateFiles(newViewTemplatesDir);
-				
-				// Create destinationdir
-				file.mkdir(getDestination());
+    function getDestination() {
+      return 'source/templates/components/' + getComponentUrl();
+    }
 
-				// Write files
-				grunt.log.writeln('Writing files:');
-				files.forEach(function (name) {
-					var template = getTemplate(newViewTemplatesDir + name);
-					name = name.replace('new-component', getComponentUrl());
-					grunt.log.ok(name);
-					file.write(getDestination() + '/' + name, template);
-				});
-			}
+    // Get new-component template
+    function getTemplate(path) {
+      return file.read(path).replace(/_COMPONENT_NAME_/g, getComponentUrl());
+    }
 
-			// No viewname
-			if (getComponentName() === '' || getComponentName() === null) {
-				// grunt.log.writeln('No componentname chosen');
-				grunt.task.run([
-					'prompt:create-component',
-					'create-component'
-				]);
-				return true;
-			}
+    function getTemplateFiles(path) {
+      return fs.readdirSync(path).filter(function(name) {
+        return file.isFile(path + name);
+      });
+    }
 
-			// View already exists: abort task
-			if (file.isDir(getDestination())) {
-				grunt.log.error('"' + getDestination() + '" already exists, task was aborted.');
-				return true;
-			}
+    function writeFiles() {
+      var newComponentTemplatesDir = 'grunt/templates/new-component/';
+      var files = getTemplateFiles(newComponentTemplatesDir);
 
-			// All is good, write the new component
-			writeFiles();
+      // Create destinationdir
+      file.mkdir(getDestination());
 
-			// Reset createView.viewName
-			grunt.config('createComponent.componentName', null);
-		}
-	);
+      // Write files
+      grunt.log.writeln('Writing files:');
+      files.forEach(function(name) {
+        var template = getTemplate(newComponentTemplatesDir + name);
+        name = name.replace('new-component', getComponentUrl());
+        grunt.log.ok(name);
+        file.write(getDestination() + '/' + name, template);
+      });
+    }
+
+    // No componentname
+    if (getComponentName() === '' || getComponentName() === null) {
+      grunt.task.run(['prompt:create-component', 'create-component']);
+      return true;
+    }
+
+    // Component already exists: abort task
+    if (file.isDir(getDestination())) {
+      grunt.log.error('"' + getDestination() + '" already exists, task was aborted.');
+      return true;
+    }
+
+    writeFiles();
+
+    // Reset createComponent.componentName
+    grunt.config('createComponent.componentName', null);
+  });
 };
