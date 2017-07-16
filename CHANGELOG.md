@@ -13,9 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Refactor prompts used for create-* and remove-* tasks
-- Versions:
-  - Updated devDependencies
-  - npm 7.0
+
+### Updated
+- GruntJS to current version
 
 ---
 
@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Templates
   - Nunjucks date filter
-  - template data.site { title, date, menu, meta }
+  - Site data, accessible with {{ site.[ title, date, menu, meta ] }}
 
 ### Changed
 - Templates
@@ -43,4 +43,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.0] - 2015-07-01
 ### Added
 - Initial commit
-...
