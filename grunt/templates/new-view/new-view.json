@@ -1,13 +1,12 @@
 {
-	"view-name": "_VIEW-NAME_",
-	"menu-order": 10,
-	"view-data": {
-		"meta": {
-			"author": "the author",
-			"date": "00-00-0000",
-			"description": "A description for _VIEW-NAME_",
-			"keywords": "_VIEW-NAME_, keyword",
-			"title": "_VIEW-NAME_"
-		}
-	}
+	"order": 0,
+	"slug": "_VIEW_NAME_",
+	"title": "_VIEW_TITLE_",
+	"dateCreated": "",
+	"dateEdited": "",
+	"meta": {
+		"author": "_AUTHOR_",
+		"description": "A description for _VIEW_TITLE_",
+		"keywords": "",
+	},
 }

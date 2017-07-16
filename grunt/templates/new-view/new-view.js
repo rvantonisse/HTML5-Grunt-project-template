@@ -1,1 +1,1 @@
-/* _VIEW-NAME_.js */
+/* _VIEW_NAME_.js */

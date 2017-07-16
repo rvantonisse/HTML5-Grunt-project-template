@@ -5,6 +5,7 @@
  */
 function getConfiguration(grunt) {
 	'use strict';
+
 	return {
 		// Set options for Livereload etc..
 		options: {
@@ -12,7 +13,7 @@ function getConfiguration(grunt) {
 		},
 		// Watch all template .html files and run compile-html:development on changes
 		templates: {
-			files: ['<%= templatesSourceDir %>**/*.html', '!templatesSourceDir %>views/**/media/', '!templatesSourceDir %>views/**/**/media/'],
+			files: ['<%= templatesSourceDir %>**/*.html'],
 			tasks: ['compile-html:development']
 		},
 		// Watch all css and run css:development related tasks on changes
@@ -20,7 +21,7 @@ function getConfiguration(grunt) {
 			files: [
 				'<%= cssSourceDir %>**/*.css',
 				'<%= viewsSourceDir %>**/*.css',
-				'<%= componentsSourceDir %>**/*.css'			
+				'<%= componentsSourceDir %>**/*.css'
 			],
 			tasks: ['concat:css']
 		},

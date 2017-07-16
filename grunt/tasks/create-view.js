@@ -1,8 +1,9 @@
 var helpers = require('../utilities/helpers');
 var fs = require('fs');
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 	'use strict';
+
 	grunt.registerTask(
 		'create-view',
 		'Create a new view',
@@ -17,38 +18,43 @@ module.exports = function (grunt) {
 		 * - new-view.json
 		 * @param {String} viewName
 		 */
-		function (viewName) {
+		function(viewName) {
 			var file = grunt.file;
 
-			function getConfigViewName () {
+			function getConfigViewName() {
 				return grunt.config('createView.viewName') || null;
 			}
-			function getViewName () {
+
+			function getViewName() {
 				return viewName || getConfigViewName();
 			}
 
-			function getViewUrl () {
+			function getViewUrl() {
 				var niceUrl = helpers.replaceSpacesWithDashes;
+
 				return niceUrl(getViewName());
 			}
-			function getDestination () {
+
+			function getDestination() {
 				return 'source/templates/views/' + getViewUrl();
 			}
 
 			// Get new-view template
-			function getTemplate (path) {
-				return file.read(path).replace(/_VIEW-NAME_/g, getViewUrl());
+			function getTemplate(path) {
+				return file.read(path).replace(/_VIEW_NAME_/g, getViewUrl());
 			}
-			function getTemplateFiles (path) {
+
+			function getTemplateFiles(path) {
 				return fs.readdirSync(path)
-					.filter(function (name) {
+					.filter(function(name) {
 						return file.isFile(path + name);
 					});
 			}
-			function writeFiles () {
+
+			function writeFiles() {
 				var newViewTemplatesDir = 'grunt/templates/new-view/';
 				var files = getTemplateFiles(newViewTemplatesDir);
-				
+
 				// Create destinationdir
 				file.mkdir(getDestination());
 				file.mkdir(getDestination() + '/media');
@@ -56,7 +62,7 @@ module.exports = function (grunt) {
 
 				// Write files
 				grunt.log.writeln('Writing files:');
-				files.forEach(function (name) {
+				files.forEach(function(name) {
 					var template = getTemplate(newViewTemplatesDir + name);
 					name = name.replace('new-view', getViewUrl());
 					grunt.log.ok(name);
@@ -71,12 +77,14 @@ module.exports = function (grunt) {
 					'prompt:create-view',
 					'create-view'
 				]);
+
 				return true;
 			}
 
 			// View already exists: abort task
 			if (file.isDir(getDestination())) {
 				grunt.log.error('"' + getDestination() + '" already exists, task was aborted.');
+
 				return true;
 			}
 

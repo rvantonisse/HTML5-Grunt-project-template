@@ -2,138 +2,201 @@
 ** HTML-COMPILER
 ** Translate Nunjucks templating for this projects needs.
 **/
-// Use fs (FileSystem) to read files and dirs
 var fs = require('fs');
-// Include grunt 
 var grunt = require('grunt');
 var nunjucks = require('nunjucks');
+var njDateFilter = require('nunjucks-date-filter')
+var helpers = require('./helpers');
 
 (function(){
 	'use strict';
+
+	var file = grunt.file;
+
+	var env = new nunjucks.Environment([
+		new nunjucks.FileSystemLoader(getTemplateDir())
+	]);
+	env.addFilter('date', njDateFilter);
+
+	var VIEWS = readViewsDir();
+	var MENU = createMenu();
 
 	// Setup basic configuration
 	function getSourceDir () {
 		return 'source/';
 	}
+
 	function getAssetsDir () {
 		return 'assets/';
 	}
+
 	function getTemplateDir () {
 		return getSourceDir() + 'templates/';
 	}
+
 	function getViewsDir () {
 		return getTemplateDir() + 'views/';
 	}
+
 	function getComponentsDir () {
 		return getTemplateDir() + 'components/';
 	}
 
-	// Create a Nunjucks environment and load the views
-	var env = new nunjucks.Environment([
-		new nunjucks.FileSystemLoader(getTemplateDir())
-	]);
+	function byMenuOrder(a, b) {
+		var aNumber = a.order || 0;
+		var bNumber = b.order || 0;
 
-	// Setup compiler methods
+		if ( aNumber < bNumber ) {
+			return -1;
+		}
+
+		if (aNumber > bNumber) {
+			return 1;
+		}
+
+		return 0;
+	}
+
+	function createMenu() {
+		grunt.log.writeln('Build menu...');
+
+		return VIEWS.map(
+			function createMenuList(view) {
+
+				return {
+					viewName: view.name,
+					path: getMenuLink(view.path),
+					title: createMenuTitle(view.name),
+					order: getViewOrder(view),
+					children: view.childViews && view.childViews.map(
+						function createChildMenuList(child) {
+
+							return {
+								viewName: child.name,
+								path: getMenuLink(child.path),
+								title: createMenuTitle(child.name),
+								order: getViewOrder(child),
+							};
+						}
+					)
+					.filter(
+						function filterWithOrder(child) {
+							return child.order;
+						}
+					)
+					.sort(byMenuOrder),
+				};
+			}
+		).filter(
+			function filterWithOrder(menuItem) {
+				return menuItem.order;
+			}
+		).sort(byMenuOrder);
+	}
+
+	function createMenuTitle(string) {
+		var replaceChar = helpers.replaceChar;
+		var capitalize = helpers.capitalize;
+
+		return capitalize(replaceChar(string, '-', ' '));
+	}
+
+	function compileView(view, data, target) {
+		data = data || {};
+
+		var filename = view.path + view.name + '.html';
+		var viewsDir = 'views/';
+		var template = getTemplate(viewsDir + filename);
+		var html = template && template.render(data);
+
+		if (!html) {
+			grunt.log.warn('No template found for: ', view.name);
+			return false;
+		}
+
+		if (view.name === 'home') {
+			file.write(target + '/index.html', html);
+		} else {
+			file.write(target + '/' + view.path + 'index.html', html);
+		}
+
+		grunt.log.ok(view.name + ' into: ' + target);
+
+		return html;
+	}
+
+	function getMenu() {
+		return MENU;
+	}
+
+	function getMenuLink(viewPath) {
+		if (viewPath.indexOf('home') !== -1) {
+			return '/index.html';
+		}
+
+		return '/' + viewPath;
+	}
+
 	function getTemplate (name) {
-		// grunt.log.writeln('Getting template for:', name);
+		if (!file.isFile('source/templates/' + name)) {
+			return false;
+		}
+
 		return env.getTemplate(name);
 	}
 
-	// Get all views in an array
-	function getViews () {
-		// grunt.log.writeln('Getting views:');
-		// use fs to read the views folder; fs.readdirSync()
-		var views = fs.readdirSync(getViewsDir())
-			// filter to only select other dirs and not files
-			.filter(function(name){
-				return grunt.file.isDir(getViewsDir() + name);
-			});
-		// grunt.log.writeln('/********');
-		// grunt.log.writeln(' * Views:');
-		// views.forEach(function(name) {
-		// 	grunt.log.writeln(' * - ' + name);
-		// });
-		// grunt.log.writeln('********/');
-		// grunt.log.writeln('');
-		return views;
-	}
-	function getViewData (view) {
-		var dataPath = getViewsDir() + view + '/'  + view + '.json';
-		var viewData = {};
-		if (grunt.file.isFile(dataPath)) {
-			viewData = grunt.file.readJSON(dataPath);
-			grunt.log.writeln(view + ' with data: ' + dataPath);
-		} else {
-			grunt.log.writeln(view + ' without data.');
+	function getViewData(view) {
+		var dataPath = getViewsDir() + view.path + view.name + '.json';
+
+		grunt.log.writeln('Data: ', dataPath);
+
+		if (file.isFile(dataPath)) {
+			return file.readJSON(dataPath);
 		}
-		return viewData;
+
+		return {};
 	}
-	function getSubviewsFor (viewName) {
-		var viewPath = getViewsDir() + viewName;
-		var subviews = fs.readdirSync(viewPath)
-			.filter(function (name) {
-				return grunt.file.isDir(viewPath + '/' + name);
-			})
-			.filter(function (name) {
-				return name !== 'media';
-			});
-		return subviews;
+
+	function getViewOrder(view) {
+		return getViewData(view).order || 0;
 	}
-	function getSubviewData (view, subview) {
-		var dataPath = getViewsDir() + view + '/' + subview + '/' + subview + '.json';
-		var subviewData = {};
-		if (grunt.file.isFile(dataPath)) {
-			subviewData = grunt.file.readJSON(dataPath);
-			grunt.log.writeln(subview + ' with data: ' + dataPath);
-		} else {
-			grunt.log.writeln(subview + ' without data.');
-		}
-		return subviewData;
+
+	function getViews() {
+		return VIEWS;
 	}
-	function getSubViews() {
-		// grunt.log.writeln('Getting subviews');
-		var views = getViews();
-		var subViews = {};
-		views.forEach(function(viewName){
-			// grunt.log.writeln('viewName:', viewName);
-			subViews[viewName] = fs.readdirSync(getViewsDir() + viewName)
-			// filter to only select other dirs and not files
-			.filter(function(name){
-				// grunt.log.writeln(name + ' isDir? ' + grunt.file.isDir(getViewsDir() + viewName + '/' + name));
-				return grunt.file.isDir(getViewsDir() + viewName + '/' + name);
-			});
-			// grunt.log.writeln('subViews[' + viewName + '](' + subViews[viewName].length + '):', subViews[viewName]);
-			if (subViews[viewName].length === 0) {
-				delete subViews[viewName];
+
+	function readViewsDir(path) {
+		var parentViewPath = path || '';
+		var basePath = getViewsDir() + parentViewPath;
+		var basePathChildDirs = fs.readdirSync(basePath).filter(
+			function filterDirectories(childDir){
+				return file.isDir(basePath + childDir);
 			}
-		});
-		// grunt.log.writeln('/**');
-		// grunt.log.writeln(' * There are subviews for:');
-		// for (var key in subViews) {
-		// 	if (key.length > 0) {
-		// 		grunt.log.writeln(' * ' + key + ' (' + subViews[key].length + ')');
-		// 		subViews[key].forEach(function(name) {
-		// 			grunt.log.writeln(' * - ' + name);
-		// 		}); 
-		// 	}
-		// }
-		// grunt.log.writeln('**/');
-		// grunt.log.ok('Got all subviews!');
-		grunt.log.writeln('');
-		return subViews;
+		);
+
+		if (basePathChildDirs.length === 0) {
+			return [];
+		}
+
+		return basePathChildDirs.map(
+			function createViewObject(viewName) {
+				var viewPath = parentViewPath + viewName + '/';
+
+				return {
+					name: viewName,
+					path: viewPath,
+					parentView: parentViewPath,
+					childViews: readViewsDir(viewPath),
+				};
+			}
+		);
 	}
 
-
-
-	// Export compiler as module
 	module.exports = {
-		getTemplate: getTemplate,
+		compileView: compileView,
+		getMenu: getMenu,
 		getViews: getViews,
 		getViewData: getViewData,
-		getSubViews: getSubViews,
-		getSubviewData: getSubviewData,
-		getSubviewsFor: getSubviewsFor,
-		getViewsDir: getViewsDir
 	};
 
 }());

@@ -1,66 +1,78 @@
 var helpers = require('../utilities/helpers');
 var fs = require('fs');
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 	'use strict';
+
 	grunt.registerTask(
 		'create-subview',
 		'Create a new subview inside an existing view',
 		/**
 		 * Create a new subview inside source/templates/views/parentview/
 		 * new-subview/
-		 * - media/
-		 * -- index.html
 		 * - new-view.css
 		 * - new-view.html
 		 * - new-view.js
 		 * @param {String} viewName
 		 */
-		function (viewName) {
+		function(viewName) {
 			var file = grunt.file;
 			var niceUrl = helpers.replaceSpacesWithDashes;
 			var niceName = helpers.replaceDashesWithSpaces;
 
-			function getSubviewName () {
+			function getSubviewName() {
 				var configSubViewName = grunt.config('createSubview.viewName') || null;
 				return viewName || configSubViewName;
 			}
-			function setConfigSubviewName (subviewName) {
+
+			function setConfigSubviewName(subviewName) {
 				grunt.config('createSubview.viewName', subviewName);
 				return true;
 			}
-			function getSubviewUrl () {
+
+			function getSubviewUrl() {
 				return niceUrl(getSubviewName());
 			}
-			function isNotValidSubviewName () {
+
+			function isNotValidSubviewName() {
 				var subviewName = getSubviewName();
-				return (subviewName === '' || subviewName === null);
+
+				return (
+					subviewName === '' ||
+					subviewName === null
+				);
 			}
-			function isSubview () {
+
+			function isSubview() {
 				return file.isDir(getDestination());
 			}
-			function getParentView () {
+
+			function getParentView() {
 				var subViewParent = grunt.config('createSubview.parentView') || null;
+
 				return subViewParent;
 			}
+
 			function getDestination() {
 				return 'source/templates/views/' + getParentView() + '/' + getSubviewUrl();
 			}
 
 			// Get new-view template
-			function getTemplate (path) {
-				return file.read(path).replace(/_VIEW-NAME_/g, getSubviewUrl()).replace(/_PARENT-VIEW_/g, getParentView());
+			function getTemplate(path) {
+				return file.read(path).replace(/_VIEW_NAME_/g, getSubviewUrl()).replace(/_PARENT_VIEW_/g, getParentView());
 			}
-			function getTemplateFiles (path) {
+
+			function getTemplateFiles(path) {
 				return fs.readdirSync(path)
-					.filter(function (name) {
+					.filter(function(name) {
 						return file.isFile(path + name);
 					});
 			}
-			function writeFiles () {
+
+			function writeFiles() {
 				var newViewTemplatesDir = 'grunt/templates/new-subview/';
 				var files = getTemplateFiles(newViewTemplatesDir);
-				
+
 				// Create destinationdirs
 				file.mkdir(getDestination());
 				file.mkdir(getDestination() + '/media');
@@ -68,7 +80,7 @@ module.exports = function (grunt) {
 
 				// Write files
 				grunt.log.writeln('Writing files:');
-				files.forEach(function (name) {
+				files.forEach(function(name) {
 					var template = getTemplate(newViewTemplatesDir + name);
 					name = name.replace('new-subview', getSubviewUrl());
 					grunt.log.ok(name);
@@ -85,6 +97,7 @@ module.exports = function (grunt) {
 					'prompt:create-subview',
 					'create-subview'
 				]);
+
 				return true;
 			} else {
 				setConfigSubviewName(getSubviewUrl());
@@ -102,8 +115,10 @@ module.exports = function (grunt) {
 					'prompt:create-subview-parentview',
 					'create-subview'
 				]);
+
 				return true;
 			}
+
 			grunt.log.ok('parentView: ' + getParentView());
 
 			// If subview already exists, abort
@@ -115,7 +130,6 @@ module.exports = function (grunt) {
 			// All ok create the new subview
 			grunt.log.ok('Creating new subview: "' + getDestination() + '"');
 			writeFiles();
-
 
 			// Reset createSubView.viewName
 			grunt.config('createSubview.viewName', null);
